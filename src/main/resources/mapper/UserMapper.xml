@@ -9,6 +9,8 @@
         <result property="name" column="name"/>
         <result property="phone" column="phone"/>
         <result property="active" column="active"/>
+        <result property="studentId" column="student_id"/>
+        <result property="teacherId" column="teacher_id"/>
     </resultMap>
 
     <select id="findByUsernameAndRole" resultMap="userMap">

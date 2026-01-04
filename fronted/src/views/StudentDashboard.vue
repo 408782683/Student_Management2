@@ -63,7 +63,7 @@ import { getUser } from '../utils/auth';
 
 const user = getUser();
 const pwd = ref({ newPassword: '' });
-const studentId = ref('');
+const studentId = ref(user?.studentId || '');
 const term = ref('');
 const grades = ref([]);
 const timetable = ref(null);

@@ -73,7 +73,7 @@ import { getUser } from '../../utils/auth';
 
 const user = getUser();
 const pwd = reactive({ newPassword: '' });
-const query = reactive({ teacherId: '', term: '' });
+const query = reactive({ teacherId: user?.teacherId || '', term: '' });
 const assignments = ref([]);
 const grade = reactive({ studentId: '', courseId: '', term: '', score: '' });
 const grades = ref([]);

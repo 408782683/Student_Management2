@@ -8,7 +8,11 @@ CREATE TABLE IF NOT EXISTS sys_user (
     role VARCHAR(16) NOT NULL,
     name VARCHAR(64),
     phone VARCHAR(32),
-    active TINYINT DEFAULT 1
+    active TINYINT DEFAULT 1,
+    student_id BIGINT NULL,
+    teacher_id BIGINT NULL,
+    FOREIGN KEY (student_id) REFERENCES student(id),
+    FOREIGN KEY (teacher_id) REFERENCES teacher(id)
 );
 
 CREATE TABLE IF NOT EXISTS college (
@@ -365,19 +369,19 @@ INSERT INTO student_course (id, student_id, course_id, term) VALUES
  (21,21,21,'2024-2025-1'),(22,22,22,'2024-2025-1'),(23,23,23,'2024-2025-1'),(24,24,24,'2024-2025-1'),(25,25,25,'2024-2025-1'),
  (26,26,26,'2024-2025-1'),(27,27,27,'2024-2025-1'),(28,28,28,'2024-2025-1'),(29,29,29,'2024-2025-1'),(30,30,30,'2024-2025-1');
 
-INSERT INTO sys_user (id, username, password, role, name, phone, active) VALUES
- (1,'admin','admin123','ADMIN','管理员1','13000000001',1),(2,'admin2','admin123','ADMIN','管理员2','13000000002',1),
+INSERT INTO sys_user (id, username, password, role, name, phone, active, student_id, teacher_id) VALUES
+ (1,'admin','admin123','ADMIN','管理员1','13000000001',1,NULL,NULL),(2,'admin2','admin123','ADMIN','管理员2','13000000002',1,NULL,NULL),
  (3,'admin3','admin123','ADMIN','管理员3','13000000003',1),(4,'admin4','admin123','ADMIN','管理员4','13000000004',1),
  (5,'admin5','admin123','ADMIN','管理员5','13000000005',1),(6,'admin6','admin123','ADMIN','管理员6','13000000006',1),
  (7,'admin7','admin123','ADMIN','管理员7','13000000007',1),(8,'admin8','admin123','ADMIN','管理员8','13000000008',1),
  (9,'admin9','admin123','ADMIN','管理员9','13000000009',1),(10,'admin10','admin123','ADMIN','管理员10','13000000010',1),
- (11,'teacher1','123456','TEACHER','王老师','13800000001',1),(12,'teacher2','123456','TEACHER','李老师','13800000002',1),
- (13,'teacher3','123456','TEACHER','张老师','13800000003',1),(14,'teacher4','123456','TEACHER','刘老师','13800000004',1),
- (15,'teacher5','123456','TEACHER','赵老师','13800000005',1),(16,'teacher6','123456','TEACHER','钱老师','13800000006',1),
- (17,'teacher7','123456','TEACHER','孙老师','13800000007',1),(18,'teacher8','123456','TEACHER','周老师','13800000008',1),
- (19,'teacher9','123456','TEACHER','吴老师','13800000009',1),(20,'teacher10','123456','TEACHER','郑老师','13800000010',1),
- (21,'student1','123456','STUDENT','李学生','13900000001',1),(22,'student2','123456','STUDENT','王同学','13900000002',1),
- (23,'student3','123456','STUDENT','张同学','13900000003',1),(24,'student4','123456','STUDENT','刘同学','13900000004',1),
- (25,'student5','123456','STUDENT','赵同学','13900000005',1),(26,'student6','123456','STUDENT','钱同学','13900000006',1),
- (27,'student7','123456','STUDENT','孙同学','13900000007',1),(28,'student8','123456','STUDENT','周同学','13900000008',1),
- (29,'student9','123456','STUDENT','吴同学','13900000009',1),(30,'student10','123456','STUDENT','郑同学','13900000010',1);
+ (11,'teacher1','123456','TEACHER','王老师','13800000001',1,NULL,1),(12,'teacher2','123456','TEACHER','李老师','13800000002',1,NULL,2),
+ (13,'teacher3','123456','TEACHER','张老师','13800000003',1,NULL,3),(14,'teacher4','123456','TEACHER','刘老师','13800000004',1,NULL,4),
+ (15,'teacher5','123456','TEACHER','赵老师','13800000005',1,NULL,5),(16,'teacher6','123456','TEACHER','钱老师','13800000006',1,NULL,6),
+ (17,'teacher7','123456','TEACHER','孙老师','13800000007',1,NULL,7),(18,'teacher8','123456','TEACHER','周老师','13800000008',1,NULL,8),
+ (19,'teacher9','123456','TEACHER','吴老师','13800000009',1,NULL,9),(20,'teacher10','123456','TEACHER','郑老师','13800000010',1,NULL,10),
+ (21,'student1','123456','STUDENT','李学生','13900000001',1,1,NULL),(22,'student2','123456','STUDENT','王同学','13900000002',1,2,NULL),
+ (23,'student3','123456','STUDENT','张同学','13900000003',1,3,NULL),(24,'student4','123456','STUDENT','刘同学','13900000004',1,4,NULL),
+ (25,'student5','123456','STUDENT','赵同学','13900000005',1,5,NULL),(26,'student6','123456','STUDENT','钱同学','13900000006',1,6,NULL),
+ (27,'student7','123456','STUDENT','孙同学','13900000007',1,7,NULL),(28,'student8','123456','STUDENT','周同学','13900000008',1,8,NULL),
+ (29,'student9','123456','STUDENT','吴同学','13900000009',1,9,NULL),(30,'student10','123456','STUDENT','郑同学','13900000010',1,10,NULL);

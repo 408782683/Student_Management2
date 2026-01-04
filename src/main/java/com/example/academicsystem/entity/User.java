@@ -11,4 +11,6 @@ public class User {
     private String name;
     private String phone;
     private Boolean active;
+    private Long studentId;
+    private Long teacherId;
 }

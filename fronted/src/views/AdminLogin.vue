@@ -63,7 +63,7 @@ const submit = async () => {
     }
     setUser(user);
     ElMessage.success('登录成功');
-    router.push('/admin');
+    router.push('/admin/base');
   } finally {
     loading.value = false;
   }
