@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.StudentMapper">
+    <resultMap id="studentMap" type="com.example.academicsystem.entity.Student">
+        <id property="id" column="id"/>
+        <result property="studentNo" column="student_no"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="birthday" column="birthday"/>
+        <result property="classId" column="class_id"/>
+        <result property="photoUrl" column="photo_url"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="enrollmentDate" column="enrollment_date"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.Student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student(student_no, name, gender, birthday, class_id, photo_url, phone, email, enrollment_date)
+        VALUES (#{studentNo}, #{name}, #{gender}, #{birthday}, #{classId}, #{photoUrl}, #{phone}, #{email}, #{enrollmentDate})
+    </insert>
+
+    <update id="update" parameterType="com.example.academicsystem.entity.Student">
+        UPDATE student
+        SET student_no=#{studentNo}, name=#{name}, gender=#{gender}, birthday=#{birthday}, class_id=#{classId},
+            photo_url=#{photoUrl}, phone=#{phone}, email=#{email}, enrollment_date=#{enrollmentDate}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM student WHERE id=#{id}
+    </delete>
+
+    <select id="findAll" resultMap="studentMap">
+        SELECT * FROM student
+    </select>
+
+    <select id="findById" resultMap="studentMap">
+        SELECT * FROM student WHERE id=#{id}
+    </select>
+</mapper>
