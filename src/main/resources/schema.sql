@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS academic_system DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE academic_system;
+
 CREATE TABLE IF NOT EXISTS sys_user (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(64) NOT NULL UNIQUE,

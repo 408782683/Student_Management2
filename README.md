@@ -31,7 +31,7 @@ src/main/resources
 - **API 文档**：集成 springdoc-openapi，启动后访问 `/swagger-ui.html`。
 
 ## 启动与数据库
-1. 创建数据库并执行 `src/main/resources/schema.sql` 以初始化表结构（包含外键约束）。
+1. 创建数据库并执行 `src/main/resources/schema.sql`（已包含 `CREATE DATABASE IF NOT EXISTS academic_system; USE academic_system;`），以初始化表结构和示例数据。
 2. 根据实际 MySQL 账号修改 `application.yml` 中的数据源配置。
 3. 运行 `mvn spring-boot:run`（或在 IDE 中直接启动 `AcademicSystemApplication`）。
 
