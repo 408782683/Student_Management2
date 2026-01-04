@@ -42,7 +42,7 @@
       <input v-model.number="studentId" type="number" placeholder="学生ID" />
       <input v-model="selectTerm" placeholder="学期" />
       <select v-model.number="selectedCourseId">
-        <option value=\"\">选择课程</option>
+        <option value="">选择课程</option>
         <option v-for=\"c in courses\" :key=\"c.id\" :value=\"c.id\">{{ c.name }} ({{ c.credit }}学分)</option>
       </select>
       <button @click="selectCourse">选课</button>

@@ -45,7 +45,7 @@
 
     <div class="form-row">
       <select v-model="major.collegeId">
-        <option value=\"\">选择学院</option>
+        <option value="">选择学院</option>
         <option v-for=\"c in colleges\" :key=\"c.id\" :value=\"c.id\">{{ c.name }}</option>
       </select>
       <input v-model="major.name" placeholder="专业名称" />
@@ -57,7 +57,7 @@
 
     <div class="form-row">
       <select v-model="clazz.majorId">
-        <option value=\"\">选择专业</option>
+        <option value="">选择专业</option>
         <option v-for=\"m in majors\" :key=\"m.id\" :value=\"m.id\">{{ m.name }}</option>
       </select>
       <input v-model="clazz.name" placeholder="班级名称" />
@@ -83,11 +83,11 @@
     <div class="form-row">
       <input v-model="plan.term" placeholder="学期 2024-2025-1" />
       <select v-model="plan.majorId">
-        <option value=\"\">选择专业</option>
+        <option value="">选择专业</option>
         <option v-for=\"m in majors\" :key=\"m.id\" :value=\"m.id\">{{ m.name }}</option>
       </select>
       <select v-model="plan.courseId">
-        <option value=\"\">选择课程</option>
+        <option value="">选择课程</option>
         <option v-for=\"c in courses\" :key=\"c.id\" :value=\"c.id\">{{ c.name }}</option>
       </select>
       <button @click="savePlan">新增培养计划</button>
@@ -95,7 +95,7 @@
     <div class=\"form-row\">
       <input v-model=\"planQuery.term\" placeholder=\"查询学期\" />
       <select v-model=\"planQuery.majorId\">
-        <option value=\"\">选择专业</option>
+        <option value="">选择专业</option>
         <option v-for=\"m in majors\" :key=\"m.id\" :value=\"m.id\">{{ m.name }}</option>
       </select>
       <button @click=\"loadPlans\">查询计划</button>
@@ -107,7 +107,7 @@
     <h2>教学任务分配</h2>
     <div class=\"form-row\">
       <select v-model=\"assignment.termPlanId\">
-        <option value=\"\">选择培养计划ID</option>
+        <option value="">选择培养计划ID</option>
         <option v-for=\"p in plans\" :key=\"p.id\" :value=\"p.id\">{{ p.id }} - {{ p.term }}</option>
       </select>
       <input v-model.number=\"assignment.teacherId\" type=\"number\" placeholder=\"教师ID\" />
