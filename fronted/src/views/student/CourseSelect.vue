@@ -60,9 +60,10 @@
 import { ref, reactive, onMounted } from 'vue';
 import http from '../../api/http';
 import { ElMessage } from 'element-plus';
-import { getUser } from '../../utils/auth';
+import { getUser, getPasswordCache } from '../../utils/auth';
 
 const user = getUser();
+const cred = getPasswordCache();
 const pwd = ref({ newPassword: '' });
 const studentId = ref(user?.studentId || '');
 const term = ref('');
@@ -74,7 +75,7 @@ const selectTerm = ref('');
 const selectedCourses = ref([]);
 
 const changePwd = async () => {
-  await http.post('/student/password', { username: user?.username, oldPassword: '', newPassword: pwd.value.newPassword });
+  await http.post('/student/password', { username: user?.username, oldPassword: cred?.password || '', newPassword: pwd.value.newPassword });
   ElMessage.success('密码已修改');
 };
 

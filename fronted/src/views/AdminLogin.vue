@@ -36,7 +36,7 @@ import { reactive, ref } from 'vue';
 import http from '../api/http';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
-import { setUser } from '../utils/auth';
+import { setUser, setPasswordCache } from '../utils/auth';
 
 const router = useRouter();
 const form = reactive({ username: '', password: '', captcha: '', role: 'ADMIN' });
@@ -62,6 +62,7 @@ const submit = async () => {
       return;
     }
     setUser(user);
+    setPasswordCache(user.username, form.password);
     ElMessage.success('登录成功');
     router.push('/admin/base');
   } finally {

@@ -68,9 +68,10 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import http from '../api/http';
-import { getUser } from '../utils/auth';
+import { getUser, getPasswordCache } from '../utils/auth';
 
 const user = getUser();
+const cred = getPasswordCache();
 const pwd = reactive({ newPassword: '' });
 const query = reactive({ teacherId: user?.teacherId || '', term: '' });
 const assignments = ref([]);
@@ -80,7 +81,7 @@ const timetable = ref(null);
 const roster = reactive({ classId: '', term: '' });
 
 const changePwd = async () => {
-  await http.post('/teacher/password', { username: user?.username, oldPassword: '', newPassword: pwd.newPassword });
+  await http.post('/teacher/password', { username: user?.username, oldPassword: cred?.password || '', newPassword: pwd.newPassword });
   alert('密码已修改');
 };
 
