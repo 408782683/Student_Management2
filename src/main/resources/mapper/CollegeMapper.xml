@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.CollegeMapper">
+    <resultMap id="collegeMap" type="com.example.academicsystem.entity.College">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.College" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO college(name, code, description) VALUES (#{name}, #{code}, #{description})
+    </insert>
+
+    <select id="findAll" resultMap="collegeMap">
+        SELECT * FROM college
+    </select>
+</mapper>
