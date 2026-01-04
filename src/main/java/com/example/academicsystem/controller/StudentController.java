@@ -2,6 +2,7 @@ package com.example.academicsystem.controller;
 
 import com.example.academicsystem.dto.PasswordChangeRequest;
 import com.example.academicsystem.entity.GradeRecord;
+import com.example.academicsystem.entity.StudentCourse;
 import com.example.academicsystem.entity.Timetable;
 import com.example.academicsystem.service.StudentService;
 import com.example.academicsystem.util.ApiResponse;
@@ -34,5 +35,16 @@ public class StudentController {
     @GetMapping("/timetable")
     public ApiResponse<Timetable> downloadTimetable(@RequestParam Long studentId, @RequestParam String term) {
         return ApiResponse.success(studentService.getTimetable(studentId, term));
+    }
+
+    @PostMapping("/course/select")
+    public ApiResponse<Void> selectCourse(@RequestParam Long studentId, @RequestParam Long courseId, @RequestParam String term) {
+        studentService.selectCourse(studentId, courseId, term);
+        return ApiResponse.success(null);
+    }
+
+    @GetMapping("/courses")
+    public ApiResponse<List<StudentCourse>> listSelectedCourses(@RequestParam Long studentId) {
+        return ApiResponse.success(studentService.listSelectedCourses(studentId));
     }
 }

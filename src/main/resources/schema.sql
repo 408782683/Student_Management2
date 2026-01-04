@@ -99,6 +99,16 @@ CREATE TABLE IF NOT EXISTS grade_record (
     FOREIGN KEY (course_id) REFERENCES course(id)
 );
 
+CREATE TABLE IF NOT EXISTS student_course (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT,
+    course_id BIGINT,
+    term VARCHAR(32),
+    UNIQUE KEY uk_student_course (student_id, course_id, term),
+    FOREIGN KEY (student_id) REFERENCES student(id),
+    FOREIGN KEY (course_id) REFERENCES course(id)
+);
+
 CREATE TABLE IF NOT EXISTS timetable (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     owner_type VARCHAR(16),
