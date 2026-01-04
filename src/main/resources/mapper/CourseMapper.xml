@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.CourseMapper">
+    <resultMap id="courseMap" type="com.example.academicsystem.entity.Course">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="credit" column="credit"/>
+        <result property="assessmentMethod" column="assessment_method"/>
+        <result property="category" column="category"/>
+        <result property="nature" column="nature"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.Course" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO course(code, name, credit, assessment_method, category, nature)
+        VALUES(#{code}, #{name}, #{credit}, #{assessmentMethod}, #{category}, #{nature})
+    </insert>
+
+    <select id="findAll" resultMap="courseMap">
+        SELECT * FROM course
+    </select>
+</mapper>
