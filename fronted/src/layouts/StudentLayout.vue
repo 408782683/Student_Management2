@@ -1,14 +1,20 @@
 <template>
   <el-container style="height:100vh;">
-    <el-aside width="200px">
+    <el-aside width="220px">
       <el-menu :default-active="active" router>
         <el-menu-item index="/student/courses">选课与课表</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
       <el-header style="display:flex;justify-content:space-between;align-items:center;">
-        <div>学生中心</div>
-        <div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <el-icon><i-ep-reading /></el-icon>
+          <div>
+            <div style="font-size:16px;font-weight:700;">学生中心</div>
+            <div style="font-size:12px;opacity:0.9;">Student Portal</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
           <el-tag type="success">{{ user?.role }}</el-tag>
           <span style="margin-left:8px;">{{ user?.name || user?.username }}</span>
           <el-button size="small" type="text" @click="logout">退出</el-button>
