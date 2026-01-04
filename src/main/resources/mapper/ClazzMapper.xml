@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.ClazzMapper">
+    <resultMap id="clazzMap" type="com.example.academicsystem.entity.Clazz">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="majorId" column="major_id"/>
+        <result property="grade" column="grade"/>
+        <result property="counselor" column="counselor"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.Clazz" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO clazz(name, major_id, grade, counselor) VALUES (#{name}, #{majorId}, #{grade}, #{counselor})
+    </insert>
+
+    <select id="findByMajorId" resultMap="clazzMap">
+        SELECT * FROM clazz WHERE major_id=#{majorId}
+    </select>
+</mapper>

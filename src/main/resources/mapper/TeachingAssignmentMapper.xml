@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.TeachingAssignmentMapper">
+    <resultMap id="assignmentMap" type="com.example.academicsystem.entity.TeachingAssignment">
+        <id property="id" column="id"/>
+        <result property="termPlanId" column="term_plan_id"/>
+        <result property="teacherId" column="teacher_id"/>
+        <result property="courseType" column="course_type"/>
+        <result property="remarks" column="remarks"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.TeachingAssignment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO teaching_assignment(term_plan_id, teacher_id, course_type, remarks)
+        VALUES(#{termPlanId}, #{teacherId}, #{courseType}, #{remarks})
+    </insert>
+
+    <select id="listByTerm" resultMap="assignmentMap">
+        SELECT ta.* FROM teaching_assignment ta
+        JOIN term_plan tp ON ta.term_plan_id = tp.id
+        WHERE tp.term=#{term}
+    </select>
+
+    <select id="listByTeacher" resultMap="assignmentMap">
+        SELECT ta.* FROM teaching_assignment ta
+        JOIN term_plan tp ON ta.term_plan_id = tp.id
+        WHERE ta.teacher_id=#{teacherId}
+        <if test="term != null and term != ''">
+            AND tp.term=#{term}
+        </if>
+    </select>
+</mapper>
