@@ -1,147 +1,220 @@
 <template>
-  <div class="card">
-    <h2>管理员 - 学生/教师信息</h2>
-    <div class="form-row">
-      <input v-model="student.id" type="number" placeholder="学生ID(留空新增)" />
-      <input v-model="student.studentNo" placeholder="学号" />
-      <input v-model="student.name" placeholder="姓名" />
-      <input v-model="student.gender" placeholder="性别" />
-      <input v-model="student.classId" type="number" placeholder="班级ID" />
-      <input v-model="student.photoUrl" placeholder="照片URL" />
-      <input v-model="student.phone" placeholder="电话" />
-      <input v-model="student.email" placeholder="邮箱" />
-      <input v-model="student.enrollmentDate" type="date" />
-      <button @click="saveStudent">保存学生</button>
-    </div>
-    <crud-table :headers="studentHeaders" :rows="students" :on-edit="fillStudent" :on-delete="removeStudent" />
-  </div>
+<template>
+  <el-space wrap fill>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>学生管理</strong></template>
+      <el-form :model="student" label-width="100px" :inline="true">
+        <el-form-item label="ID">
+          <el-input v-model="student.id" placeholder="留空新增" type="number" style="width:150px;" />
+        </el-form-item>
+        <el-form-item label="学号"><el-input v-model="student.studentNo" /></el-form-item>
+        <el-form-item label="姓名"><el-input v-model="student.name" /></el-form-item>
+        <el-form-item label="性别"><el-input v-model="student.gender" /></el-form-item>
+        <el-form-item label="班级ID"><el-input v-model="student.classId" type="number" /></el-form-item>
+        <el-form-item label="电话"><el-input v-model="student.phone" /></el-form-item>
+        <el-form-item label="邮箱"><el-input v-model="student.email" /></el-form-item>
+        <el-form-item label="入学日期"><el-date-picker v-model="student.enrollmentDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="saveStudent">保存学生</el-button>
+        </el-form-item>
+      </el-form>
+      <el-table :data="students" style="width:100%;margin-top:8px;" height="300">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="studentNo" label="学号" />
+        <el-table-column prop="name" label="姓名" />
+        <el-table-column prop="gender" label="性别" />
+        <el-table-column prop="classId" label="班级ID" />
+        <el-table-column label="操作" width="160">
+          <template #default="scope">
+            <el-button size="small" @click="fillStudent(scope.row)">编辑</el-button>
+            <el-button size="small" type="danger" @click="removeStudent(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>教师信息</h2>
-    <div class="form-row">
-      <input v-model="teacher.id" type="number" placeholder="教师ID(留空新增)" />
-      <input v-model="teacher.teacherNo" placeholder="工号" />
-      <input v-model="teacher.name" placeholder="姓名" />
-      <input v-model="teacher.title" placeholder="职称" />
-      <input v-model="teacher.collegeId" type="number" placeholder="学院ID" />
-      <input v-model="teacher.photoUrl" placeholder="照片URL" />
-      <input v-model="teacher.phone" placeholder="电话" />
-      <input v-model="teacher.email" placeholder="邮箱" />
-      <input v-model="teacher.hiredDate" type="date" />
-      <button @click="saveTeacher">保存教师</button>
-    </div>
-    <crud-table :headers="teacherHeaders" :rows="teachers" :on-edit="fillTeacher" :on-delete="removeTeacher" />
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>教师管理</strong></template>
+      <el-form :model="teacher" label-width="100px" :inline="true">
+        <el-form-item label="ID"><el-input v-model="teacher.id" type="number" placeholder="留空新增" style="width:150px;" /></el-form-item>
+        <el-form-item label="工号"><el-input v-model="teacher.teacherNo" /></el-form-item>
+        <el-form-item label="姓名"><el-input v-model="teacher.name" /></el-form-item>
+        <el-form-item label="职称"><el-input v-model="teacher.title" /></el-form-item>
+        <el-form-item label="学院ID"><el-input v-model="teacher.collegeId" type="number" /></el-form-item>
+        <el-form-item label="电话"><el-input v-model="teacher.phone" /></el-form-item>
+        <el-form-item label="邮箱"><el-input v-model="teacher.email" /></el-form-item>
+        <el-form-item label="入职日期"><el-date-picker v-model="teacher.hiredDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveTeacher">保存教师</el-button></el-form-item>
+      </el-form>
+      <el-table :data="teachers" style="width:100%;margin-top:8px;" height="300">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="teacherNo" label="工号" />
+        <el-table-column prop="name" label="姓名" />
+        <el-table-column prop="collegeId" label="学院ID" />
+        <el-table-column prop="title" label="职称" />
+        <el-table-column label="操作" width="160">
+          <template #default="scope">
+            <el-button size="small" @click="fillTeacher(scope.row)">编辑</el-button>
+            <el-button size="small" type="danger" @click="removeTeacher(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>学院 / 专业 / 班级</h2>
-    <div class="form-row">
-      <input v-model="college.name" placeholder="学院名称" />
-      <input v-model="college.code" placeholder="学院代码" />
-      <input v-model="college.description" placeholder="描述" />
-      <button @click="saveCollege">新增学院</button>
-    </div>
-    <crud-table :headers="collegeHeaders" :rows="colleges" />
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>学院 / 专业 / 班级</strong></template>
+      <el-form :model="college" label-width="90px" :inline="true">
+        <el-form-item label="学院名"><el-input v-model="college.name" /></el-form-item>
+        <el-form-item label="代码"><el-input v-model="college.code" /></el-form-item>
+        <el-form-item label="描述"><el-input v-model="college.description" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveCollege">新增学院</el-button></el-form-item>
+      </el-form>
+      <el-table :data="colleges" style="margin-bottom:12px;" height="200">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="name" label="学院" />
+        <el-table-column prop="code" label="代码" />
+      </el-table>
 
-    <div class="form-row">
-      <select v-model="major.collegeId">
-        <option value="">选择学院</option>
-        <option v-for="c in colleges" :key="c.id" :value="c.id">{{ c.name }}</option>
-      </select>
-      <input v-model="major.name" placeholder="专业名称" />
-      <input v-model="major.code" placeholder="专业代码" />
-      <input v-model="major.description" placeholder="描述" />
-      <button @click="saveMajor">新增专业</button>
-    </div>
-    <crud-table :headers="majorHeaders" :rows="majors" />
+      <el-divider content-position="left">专业</el-divider>
+      <el-form :model="major" label-width="90px" :inline="true">
+        <el-form-item label="学院">
+          <el-select v-model="major.collegeId" placeholder="选择学院" style="width:180px;">
+            <el-option v-for="c in colleges" :key="c.id" :label="c.name" :value="c.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="专业名"><el-input v-model="major.name" /></el-form-item>
+        <el-form-item label="代码"><el-input v-model="major.code" /></el-form-item>
+        <el-form-item label="描述"><el-input v-model="major.description" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveMajor">新增专业</el-button></el-form-item>
+      </el-form>
+      <el-table :data="majors" style="margin-bottom:12px;" height="200">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="name" label="专业" />
+        <el-table-column prop="code" label="代码" />
+        <el-table-column prop="collegeId" label="学院ID" />
+      </el-table>
 
-    <div class="form-row">
-      <select v-model="clazz.majorId">
-        <option value="">选择专业</option>
-        <option v-for="m in majors" :key="m.id" :value="m.id">{{ m.name }}</option>
-      </select>
-      <input v-model="clazz.name" placeholder="班级名称" />
-      <input v-model.number="clazz.grade" type="number" placeholder="年级" />
-      <input v-model="clazz.counselor" placeholder="辅导员" />
-      <button @click="saveClazz">新增班级</button>
-    </div>
-    <crud-table :headers="clazzHeaders" :rows="clazzes" />
-  </div>
+      <el-divider content-position="left">班级</el-divider>
+      <el-form :model="clazz" label-width="90px" :inline="true">
+        <el-form-item label="专业">
+          <el-select v-model="clazz.majorId" placeholder="选择专业" style="width:180px;">
+            <el-option v-for="m in majors" :key="m.id" :label="m.name" :value="m.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="班级名"><el-input v-model="clazz.name" /></el-form-item>
+        <el-form-item label="年级"><el-input v-model.number="clazz.grade" type="number" /></el-form-item>
+        <el-form-item label="辅导员"><el-input v-model="clazz.counselor" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveClazz">新增班级</el-button></el-form-item>
+      </el-form>
+      <el-table :data="clazzes" height="200">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="name" label="班级" />
+        <el-table-column prop="majorId" label="专业ID" />
+        <el-table-column prop="grade" label="年级" />
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>课程与培养计划</h2>
-    <div class="form-row">
-      <input v-model="course.name" placeholder="课程名称" />
-      <input v-model.number="course.credit" placeholder="学分" type="number" />
-      <input v-model="course.category" placeholder="课程分类" />
-      <input v-model="course.nature" placeholder="课程性质" />
-      <input v-model="course.assessmentMethod" placeholder="考核方式" />
-      <button @click="saveCourse">保存课程</button>
-    </div>
-    <crud-table :headers="courseHeaders" :rows="courses" />
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>课程与培养计划</strong></template>
+      <el-form :model="course" label-width="90px" :inline="true">
+        <el-form-item label="课程名"><el-input v-model="course.name" /></el-form-item>
+        <el-form-item label="学分"><el-input v-model.number="course.credit" type="number" style="width:120px;" /></el-form-item>
+        <el-form-item label="分类"><el-input v-model="course.category" /></el-form-item>
+        <el-form-item label="性质"><el-input v-model="course.nature" /></el-form-item>
+        <el-form-item label="考核"><el-input v-model="course.assessmentMethod" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveCourse">保存课程</el-button></el-form-item>
+      </el-form>
+      <el-table :data="courses" style="margin-bottom:12px;" height="200">
+        <el-table-column prop="id" label="ID" width="50" />
+        <el-table-column prop="name" label="课程" />
+        <el-table-column prop="credit" label="学分" width="80" />
+        <el-table-column prop="category" label="分类" />
+        <el-table-column prop="nature" label="性质" />
+      </el-table>
 
-    <div class="form-row">
-      <input v-model="plan.term" placeholder="学期 2024-2025-1" />
-      <select v-model="plan.majorId">
-        <option value="">选择专业</option>
-        <option v-for="m in majors" :key="m.id" :value="m.id">{{ m.name }}</option>
-      </select>
-      <select v-model="plan.courseId">
-        <option value="">选择课程</option>
-        <option v-for="c in courses" :key="c.id" :value="c.id">{{ c.name }}</option>
-      </select>
-      <button @click="savePlan">新增培养计划</button>
-    </div>
-    <div class="form-row">
-      <input v-model="planQuery.term" placeholder="查询学期" />
-      <select v-model="planQuery.majorId">
-        <option value="">选择专业</option>
-        <option v-for="m in majors" :key="m.id" :value="m.id">{{ m.name }}</option>
-      </select>
-      <button @click="loadPlans">查询计划</button>
-    </div>
-    <crud-table :headers="planHeaders" :rows="plans" />
-  </div>
+      <el-divider content-position="left">培养计划</el-divider>
+      <el-form :model="plan" label-width="90px" :inline="true">
+        <el-form-item label="学期"><el-input v-model="plan.term" placeholder="2024-2025-1" /></el-form-item>
+        <el-form-item label="专业">
+          <el-select v-model="plan.majorId" placeholder="选择专业" style="width:180px;">
+            <el-option v-for="m in majors" :key="m.id" :label="m.name" :value="m.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="课程">
+          <el-select v-model="plan.courseId" placeholder="选择课程" style="width:180px;">
+            <el-option v-for="c in courses" :key="c.id" :label="c.name" :value="c.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item><el-button type="primary" @click="savePlan">新增计划</el-button></el-form-item>
+      </el-form>
+      <el-form :model="planQuery" label-width="90px" :inline="true" style="margin-top:6px;">
+        <el-form-item label="学期"><el-input v-model="planQuery.term" /></el-form-item>
+        <el-form-item label="专业">
+          <el-select v-model="planQuery.majorId" placeholder="选择专业" style="width:180px;">
+            <el-option v-for="m in majors" :key="m.id" :label="m.name" :value="m.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item><el-button @click="loadPlans">查询计划</el-button></el-form-item>
+      </el-form>
+      <el-table :data="plans" height="200">
+        <el-table-column prop="id" label="ID" width="50" />
+        <el-table-column prop="term" label="学期" />
+        <el-table-column prop="majorId" label="专业ID" />
+        <el-table-column prop="courseId" label="课程ID" />
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>教学任务分配</h2>
-    <div class="form-row">
-      <select v-model="assignment.termPlanId">
-        <option value="">选择培养计划ID</option>
-        <option v-for="p in plans" :key="p.id" :value="p.id">{{ p.id }} - {{ p.term }}</option>
-      </select>
-      <input v-model.number="assignment.teacherId" type="number" placeholder="教师ID" />
-      <input v-model="assignment.courseType" placeholder="课程类别 (基础/专业)" />
-      <input v-model="assignment.remarks" placeholder="备注" />
-      <button @click="saveAssignment">保存分配</button>
-    </div>
-    <div class="form-row">
-      <input v-model="assignmentTerm" placeholder="查询学期" />
-      <button @click="loadAssignments">查询</button>
-    </div>
-    <crud-table :headers="assignmentHeaders" :rows="assignments" />
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>教学任务分配</strong></template>
+      <el-form :model="assignment" label-width="110px" :inline="true">
+        <el-form-item label="培养计划">
+          <el-select v-model="assignment.termPlanId" placeholder="选择计划" style="width:180px;">
+            <el-option v-for="p in plans" :key="p.id" :label="`${p.id} - ${p.term}`" :value="p.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="教师ID"><el-input v-model.number="assignment.teacherId" type="number" /></el-form-item>
+        <el-form-item label="课程类别"><el-input v-model="assignment.courseType" placeholder="基础/专业" /></el-form-item>
+        <el-form-item label="备注"><el-input v-model="assignment.remarks" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveAssignment">保存分配</el-button></el-form-item>
+      </el-form>
+      <el-form :inline="true" label-width="80px" style="margin-top:6px;">
+        <el-form-item label="学期">
+          <el-input v-model="assignmentTerm" placeholder="查询学期" />
+        </el-form-item>
+        <el-form-item><el-button @click="loadAssignments">查询</el-button></el-form-item>
+      </el-form>
+      <el-table :data="assignments" height="200">
+        <el-table-column prop="id" label="ID" width="50" />
+        <el-table-column prop="termPlanId" label="计划ID" />
+        <el-table-column prop="teacherId" label="教师ID" />
+        <el-table-column prop="courseType" label="类型" />
+        <el-table-column prop="remarks" label="备注" />
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>上传课表</h2>
-    <div class="form-row">
-      <select v-model="upload.ownerType">
-        <option value="MAJOR">专业课表</option>
-        <option value="TEACHER">教师课表</option>
-        <option value="STUDENT">学生课表</option>
-      </select>
-      <input v-model.number="upload.ownerId" placeholder="关联ID" type="number" />
-      <input v-model="upload.term" placeholder="学期 2024-2025-1" />
-      <input type="file" @change="onFileChange" />
-      <button :disabled="!upload.file" @click="doUpload">上传</button>
-    </div>
-    <div v-if="timetables.length">
-      <h3>已上传</h3>
-      <ul>
-        <li v-for="t in timetables" :key="t.id">{{ t.term }} - {{ t.fileName }} ({{ t.fileUrl }})</li>
-      </ul>
-    </div>
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>课表上传</strong></template>
+      <el-form :model="upload" label-width="90px" :inline="true">
+        <el-form-item label="归属">
+          <el-select v-model="upload.ownerType" style="width:160px;">
+            <el-option label="专业" value="MAJOR" />
+            <el-option label="教师" value="TEACHER" />
+            <el-option label="学生" value="STUDENT" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="关联ID"><el-input v-model.number="upload.ownerId" type="number" style="width:140px;" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="upload.term" placeholder="2024-2025-1" /></el-form-item>
+        <el-form-item label="文件"><input type="file" @change="onFileChange" /></el-form-item>
+        <el-form-item><el-button type="primary" :disabled="!upload.file" @click="doUpload">上传</el-button></el-form-item>
+      </el-form>
+      <el-table :data="timetables" style="margin-top:8px;" height="200">
+        <el-table-column prop="id" label="ID" width="50" />
+        <el-table-column prop="term" label="学期" />
+        <el-table-column prop="fileName" label="文件名" />
+        <el-table-column prop="fileUrl" label="存储路径" />
+      </el-table>
+    </el-card>
+  </el-space>
 </template>
 
 <script setup>

@@ -1,62 +1,61 @@
 <template>
-  <div class="card">
-    <h2>学生 - 修改密码</h2>
-    <div class="form-row">
-      <input v-model="pwd.username" placeholder="用户名" />
-      <input v-model="pwd.oldPassword" type="password" placeholder="旧密码" />
-      <input v-model="pwd.newPassword" type="password" placeholder="新密码" />
-      <button @click="changePwd">修改</button>
-    </div>
-  </div>
+  <el-space wrap fill>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>修改密码</strong></template>
+      <el-form :model="pwd" label-width="90px" :inline="true">
+        <el-form-item label="用户名"><el-input v-model="pwd.username" /></el-form-item>
+        <el-form-item label="旧密码"><el-input v-model="pwd.oldPassword" type="password" show-password /></el-form-item>
+        <el-form-item label="新密码"><el-input v-model="pwd.newPassword" type="password" show-password /></el-form-item>
+        <el-form-item><el-button type="primary" @click="changePwd">修改</el-button></el-form-item>
+      </el-form>
+    </el-card>
 
-  <div class="card">
-    <h2>成绩查询 / 打印</h2>
-    <div class="form-row">
-      <input v-model.number="studentId" type="number" placeholder="学生ID" />
-      <button @click="loadGrades">查询</button>
-      <button :disabled="!grades.length" @click="printGrades">打印成绩单</button>
-    </div>
-    <table class="table" v-if="grades.length">
-      <thead><tr><th>课程ID</th><th>学期</th><th>成绩</th></tr></thead>
-      <tbody>
-        <tr v-for="g in grades" :key="g.id">
-          <td>{{ g.courseId }}</td><td>{{ g.term }}</td><td>{{ g.score }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>成绩查询 / 打印</strong></template>
+      <el-form :inline="true" label-width="90px">
+        <el-form-item label="学生ID"><el-input v-model.number="studentId" type="number" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="loadGrades">查询</el-button></el-form-item>
+        <el-form-item><el-button :disabled="!grades.length" @click="printGrades">打印成绩单</el-button></el-form-item>
+      </el-form>
+      <el-table :data="grades" height="240">
+        <el-table-column prop="courseId" label="课程ID" />
+        <el-table-column prop="term" label="学期" />
+        <el-table-column prop="score" label="成绩" />
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>课表下载</h2>
-    <div class="form-row">
-      <input v-model.number="studentId" type="number" placeholder="学生ID" />
-      <input v-model="term" placeholder="学期" />
-      <button @click="loadTimetable">获取课表</button>
-    </div>
-    <p v-if="timetable">文件：{{ timetable.fileName }} 路径：{{ timetable.fileUrl }}</p>
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>课表下载</strong></template>
+      <el-form :inline="true" label-width="90px">
+        <el-form-item label="学生ID"><el-input v-model.number="studentId" type="number" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="term" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="loadTimetable">获取课表</el-button></el-form-item>
+      </el-form>
+      <el-alert v-if="timetable" type="success" :closable="false" show-icon>
+        <template #title>文件：{{ timetable.fileName }} &nbsp; 路径：{{ timetable.fileUrl }}</template>
+      </el-alert>
+    </el-card>
 
-  <div class="card">
-    <h2>自主选课</h2>
-    <div class="form-row">
-      <input v-model.number="studentId" type="number" placeholder="学生ID" />
-      <input v-model="selectTerm" placeholder="学期" />
-      <select v-model.number="selectedCourseId">
-        <option value="">选择课程</option>
-        <option v-for="c in courses" :key="c.id" :value="c.id">{{ c.name }} ({{ c.credit }}学分)</option>
-      </select>
-      <button @click="selectCourse">选课</button>
-    </div>
-    <button @click="loadSelectedCourses">刷新已选课程</button>
-    <table class="table" v-if="selectedCourses.length">
-      <thead><tr><th>ID</th><th>课程ID</th><th>学期</th></tr></thead>
-      <tbody>
-        <tr v-for="c in selectedCourses" :key="c.id">
-          <td>{{ c.id }}</td><td>{{ c.courseId }}</td><td>{{ c.term }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>自主选课</strong></template>
+      <el-form :inline="true" label-width="90px">
+        <el-form-item label="学生ID"><el-input v-model.number="studentId" type="number" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="selectTerm" /></el-form-item>
+        <el-form-item label="课程">
+          <el-select v-model.number="selectedCourseId" placeholder="选择课程" style="width:200px;">
+            <el-option v-for="c in courses" :key="c.id" :label="`${c.name} (${c.credit}学分)`" :value="c.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item><el-button type="primary" @click="selectCourse">选课</el-button></el-form-item>
+      </el-form>
+      <el-button style="margin:8px 0;" @click="loadSelectedCourses">刷新已选课程</el-button>
+      <el-table :data="selectedCourses" height="240">
+        <el-table-column prop="id" label="记录ID" width="80" />
+        <el-table-column prop="courseId" label="课程ID" />
+        <el-table-column prop="term" label="学期" />
+      </el-table>
+    </el-card>
+  </el-space>
 </template>
 
 <script setup>

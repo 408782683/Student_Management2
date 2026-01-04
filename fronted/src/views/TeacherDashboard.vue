@@ -1,73 +1,70 @@
 <template>
-  <div class="card">
-    <h2>教师 - 修改密码</h2>
-    <div class="form-row">
-      <input v-model="pwd.username" placeholder="用户名" />
-      <input v-model="pwd.oldPassword" type="password" placeholder="旧密码" />
-      <input v-model="pwd.newPassword" type="password" placeholder="新密码" />
-      <button @click="changePwd">修改</button>
-    </div>
-  </div>
+  <el-space wrap fill>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>修改密码</strong></template>
+      <el-form :model="pwd" label-width="90px" :inline="true">
+        <el-form-item label="用户名"><el-input v-model="pwd.username" /></el-form-item>
+        <el-form-item label="旧密码"><el-input v-model="pwd.oldPassword" type="password" show-password /></el-form-item>
+        <el-form-item label="新密码"><el-input v-model="pwd.newPassword" type="password" show-password /></el-form-item>
+        <el-form-item><el-button type="primary" @click="changePwd">修改</el-button></el-form-item>
+      </el-form>
+    </el-card>
 
-  <div class="card">
-    <h2>教学任务</h2>
-    <div class="form-row">
-      <input v-model.number="query.teacherId" type="number" placeholder="教师ID" />
-      <input v-model="query.term" placeholder="学期" />
-      <button @click="loadAssignments">查询</button>
-    </div>
-    <table class="table" v-if="assignments.length">
-      <thead><tr><th>ID</th><th>课程类型</th><th>备注</th></tr></thead>
-      <tbody>
-        <tr v-for="a in assignments" :key="a.id">
-          <td>{{ a.id }}</td><td>{{ a.courseType }}</td><td>{{ a.remarks }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>教学任务</strong></template>
+      <el-form :model="query" label-width="90px" :inline="true">
+        <el-form-item label="教师ID"><el-input v-model.number="query.teacherId" type="number" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="query.term" placeholder="2024-2025-1" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="loadAssignments">查询</el-button></el-form-item>
+      </el-form>
+      <el-table :data="assignments" height="220">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="courseType" label="课程类型" />
+        <el-table-column prop="remarks" label="备注" />
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>录入/查询成绩</h2>
-    <div class="form-row">
-      <input v-model.number="grade.studentId" type="number" placeholder="学生ID" />
-      <input v-model.number="grade.courseId" type="number" placeholder="课程ID" />
-      <input v-model="grade.term" placeholder="学期" />
-      <input v-model.number="grade.score" type="number" placeholder="成绩(0-100)" />
-      <button @click="submitGrade">提交</button>
-    </div>
-    <div class="form-row">
-      <input v-model.number="query.teacherId" type="number" placeholder="教师ID" />
-      <input v-model="query.term" placeholder="学期" />
-      <button @click="loadGrades">查询成绩</button>
-    </div>
-    <table class="table" v-if="grades.length">
-      <thead><tr><th>学生</th><th>课程</th><th>学期</th><th>成绩</th></tr></thead>
-      <tbody>
-        <tr v-for="g in grades" :key="g.id">
-          <td>{{ g.studentId }}</td><td>{{ g.courseId }}</td><td>{{ g.term }}</td><td>{{ g.score }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>录入/查询成绩</strong></template>
+      <el-form :model="grade" label-width="100px" :inline="true">
+        <el-form-item label="学生ID"><el-input v-model.number="grade.studentId" type="number" /></el-form-item>
+        <el-form-item label="课程ID"><el-input v-model.number="grade.courseId" type="number" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="grade.term" /></el-form-item>
+        <el-form-item label="成绩"><el-input v-model.number="grade.score" type="number" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="submitGrade">提交</el-button></el-form-item>
+      </el-form>
+      <el-divider content-position="left">成绩查询</el-divider>
+      <el-form :model="query" label-width="90px" :inline="true">
+        <el-form-item label="教师ID"><el-input v-model.number="query.teacherId" type="number" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="query.term" /></el-form-item>
+        <el-form-item><el-button @click="loadGrades">查询</el-button></el-form-item>
+      </el-form>
+      <el-table :data="grades" height="240">
+        <el-table-column prop="studentId" label="学生" />
+        <el-table-column prop="courseId" label="课程" />
+        <el-table-column prop="term" label="学期" />
+        <el-table-column prop="score" label="成绩" />
+      </el-table>
+    </el-card>
 
-  <div class="card">
-    <h2>课表下载</h2>
-    <div class="form-row">
-      <input v-model.number="query.teacherId" type="number" placeholder="教师ID" />
-      <input v-model="query.term" placeholder="学期" />
-      <button @click="loadTimetable">获取课表</button>
-    </div>
-    <p v-if="timetable">文件：{{ timetable.fileName }} 路径：{{ timetable.fileUrl }}</p>
-  </div>
-
-  <div class="card">
-    <h2>导出点名册</h2>
-    <div class="form-row">
-      <input v-model.number="roster.classId" type="number" placeholder="行政班ID" />
-      <input v-model="roster.term" placeholder="学期" />
-      <button @click="exportRoster">下载doc</button>
-    </div>
-  </div>
+    <el-card class="card-block" shadow="hover">
+      <template #header><strong>课表与点名册</strong></template>
+      <el-form :model="query" label-width="90px" :inline="true">
+        <el-form-item label="教师ID"><el-input v-model.number="query.teacherId" type="number" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="query.term" /></el-form-item>
+        <el-form-item><el-button @click="loadTimetable">获取课表</el-button></el-form-item>
+      </el-form>
+      <el-alert v-if="timetable" type="success" :closable="false" show-icon>
+        <template #title>文件：{{ timetable.fileName }} &nbsp; 路径：{{ timetable.fileUrl }}</template>
+      </el-alert>
+      <el-divider />
+      <el-form :model="roster" label-width="90px" :inline="true">
+        <el-form-item label="行政班ID"><el-input v-model.number="roster.classId" type="number" /></el-form-item>
+        <el-form-item label="学期"><el-input v-model="roster.term" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="exportRoster">导出点名册</el-button></el-form-item>
+      </el-form>
+    </el-card>
+  </el-space>
 </template>
 
 <script setup>
