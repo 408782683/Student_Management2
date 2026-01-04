@@ -1,62 +1,55 @@
 <template>
   <el-space wrap fill>
     <el-card class="card-block" shadow="hover">
-      <template #header><strong>学生管理</strong></template>
-      <el-form :model="student" label-width="100px" :inline="true">
-        <el-form-item label="ID">
-          <el-input v-model="student.id" placeholder="留空新增" type="number" style="width:150px;" />
-        </el-form-item>
-        <el-form-item label="学号"><el-input v-model="student.studentNo" /></el-form-item>
-        <el-form-item label="姓名"><el-input v-model="student.name" /></el-form-item>
-        <el-form-item label="性别"><el-input v-model="student.gender" /></el-form-item>
-        <el-form-item label="班级ID"><el-input v-model="student.classId" type="number" /></el-form-item>
-        <el-form-item label="电话"><el-input v-model="student.phone" /></el-form-item>
-        <el-form-item label="邮箱"><el-input v-model="student.email" /></el-form-item>
-        <el-form-item label="入学日期"><el-date-picker v-model="student.enrollmentDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="saveStudent">保存学生</el-button>
-        </el-form-item>
+      <template #header><strong>学院 / 专业 / 班级</strong></template>
+      <el-form :model="college" label-width="90px" :inline="true">
+        <el-form-item label="学院名"><el-input v-model="college.name" /></el-form-item>
+        <el-form-item label="代码"><el-input v-model="college.code" /></el-form-item>
+        <el-form-item label="描述"><el-input v-model="college.description" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveCollege">新增学院</el-button></el-form-item>
       </el-form>
-      <el-table :data="students" style="width:100%;margin-top:8px;" height="300">
+      <el-table :data="colleges" style="margin-bottom:12px;" height="200">
         <el-table-column prop="id" label="ID" width="60" />
-        <el-table-column prop="studentNo" label="学号" />
-        <el-table-column prop="name" label="姓名" />
-        <el-table-column prop="gender" label="性别" />
-        <el-table-column prop="classId" label="班级ID" />
-        <el-table-column label="操作" width="160">
-          <template #default="scope">
-            <el-button size="small" @click="fillStudent(scope.row)">编辑</el-button>
-            <el-button size="small" type="danger" @click="removeStudent(scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
+        <el-table-column prop="name" label="学院" />
+        <el-table-column prop="code" label="代码" />
       </el-table>
-    </el-card>
 
-    <el-card class="card-block" shadow="hover">
-      <template #header><strong>教师管理</strong></template>
-      <el-form :model="teacher" label-width="100px" :inline="true">
-        <el-form-item label="ID"><el-input v-model="teacher.id" type="number" placeholder="留空新增" style="width:150px;" /></el-form-item>
-        <el-form-item label="工号"><el-input v-model="teacher.teacherNo" /></el-form-item>
-        <el-form-item label="姓名"><el-input v-model="teacher.name" /></el-form-item>
-        <el-form-item label="职称"><el-input v-model="teacher.title" /></el-form-item>
-        <el-form-item label="学院ID"><el-input v-model="teacher.collegeId" type="number" /></el-form-item>
-        <el-form-item label="电话"><el-input v-model="teacher.phone" /></el-form-item>
-        <el-form-item label="邮箱"><el-input v-model="teacher.email" /></el-form-item>
-        <el-form-item label="入职日期"><el-date-picker v-model="teacher.hiredDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
-        <el-form-item><el-button type="primary" @click="saveTeacher">保存教师</el-button></el-form-item>
+      <el-divider content-position="left">专业</el-divider>
+      <el-form :model="major" label-width="90px" :inline="true">
+        <el-form-item label="学院">
+          <el-select v-model="major.collegeId" placeholder="选择学院" style="width:180px;">
+            <el-option v-for="c in colleges" :key="c.id" :label="c.name" :value="c.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="专业名"><el-input v-model="major.name" /></el-form-item>
+        <el-form-item label="代码"><el-input v-model="major.code" /></el-form-item>
+        <el-form-item label="描述"><el-input v-model="major.description" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveMajor">新增专业</el-button></el-form-item>
       </el-form>
-      <el-table :data="teachers" style="width:100%;margin-top:8px;" height="300">
+      <el-table :data="majors" style="margin-bottom:12px;" height="200">
         <el-table-column prop="id" label="ID" width="60" />
-        <el-table-column prop="teacherNo" label="工号" />
-        <el-table-column prop="name" label="姓名" />
+        <el-table-column prop="name" label="专业" />
+        <el-table-column prop="code" label="代码" />
         <el-table-column prop="collegeId" label="学院ID" />
-        <el-table-column prop="title" label="职称" />
-        <el-table-column label="操作" width="160">
-          <template #default="scope">
-            <el-button size="small" @click="fillTeacher(scope.row)">编辑</el-button>
-            <el-button size="small" type="danger" @click="removeTeacher(scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
+      </el-table>
+
+      <el-divider content-position="left">班级</el-divider>
+      <el-form :model="clazz" label-width="90px" :inline="true">
+        <el-form-item label="专业">
+          <el-select v-model="clazz.majorId" placeholder="选择专业" style="width:180px;">
+            <el-option v-for="m in majors" :key="m.id" :label="m.name" :value="m.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="班级名"><el-input v-model="clazz.name" /></el-form-item>
+        <el-form-item label="年级"><el-input v-model.number="clazz.grade" type="number" /></el-form-item>
+        <el-form-item label="辅导员"><el-input v-model="clazz.counselor" /></el-form-item>
+        <el-form-item><el-button type="primary" @click="saveClazz">新增班级</el-button></el-form-item>
+      </el-form>
+      <el-table :data="clazzes" height="200">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="name" label="班级" />
+        <el-table-column prop="majorId" label="专业ID" />
+        <el-table-column prop="grade" label="年级" />
       </el-table>
     </el-card>
 
