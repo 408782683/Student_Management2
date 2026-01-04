@@ -3,8 +3,8 @@ spring:
     name: academic-system
   datasource:
     url: jdbc:mysql://localhost:3306/academic_system?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: root
+    username: 408782683
+    password: LAOzimjwwx233
     driver-class-name: com.mysql.cj.jdbc.Driver
   freemarker:
     suffix: .ftl
