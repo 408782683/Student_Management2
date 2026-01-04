@@ -1,5 +1,4 @@
 <template>
-<template>
   <el-space wrap fill>
     <el-card class="card-block" shadow="hover">
       <template #header><strong>学生管理</strong></template>
