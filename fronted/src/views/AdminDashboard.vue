@@ -46,7 +46,7 @@
     <div class="form-row">
       <select v-model="major.collegeId">
         <option value="">选择学院</option>
-        <option v-for=\"c in colleges\" :key=\"c.id\" :value=\"c.id\">{{ c.name }}</option>
+        <option v-for="c in colleges" :key="c.id" :value="c.id">{{ c.name }}</option>
       </select>
       <input v-model="major.name" placeholder="专业名称" />
       <input v-model="major.code" placeholder="专业代码" />
@@ -58,7 +58,7 @@
     <div class="form-row">
       <select v-model="clazz.majorId">
         <option value="">选择专业</option>
-        <option v-for=\"m in majors\" :key=\"m.id\" :value=\"m.id\">{{ m.name }}</option>
+        <option v-for="m in majors" :key="m.id" :value="m.id">{{ m.name }}</option>
       </select>
       <input v-model="clazz.name" placeholder="班级名称" />
       <input v-model.number="clazz.grade" type="number" placeholder="年级" />
@@ -84,61 +84,61 @@
       <input v-model="plan.term" placeholder="学期 2024-2025-1" />
       <select v-model="plan.majorId">
         <option value="">选择专业</option>
-        <option v-for=\"m in majors\" :key=\"m.id\" :value=\"m.id\">{{ m.name }}</option>
+        <option v-for="m in majors" :key="m.id" :value="m.id">{{ m.name }}</option>
       </select>
       <select v-model="plan.courseId">
         <option value="">选择课程</option>
-        <option v-for=\"c in courses\" :key=\"c.id\" :value=\"c.id\">{{ c.name }}</option>
+        <option v-for="c in courses" :key="c.id" :value="c.id">{{ c.name }}</option>
       </select>
       <button @click="savePlan">新增培养计划</button>
     </div>
-    <div class=\"form-row\">
-      <input v-model=\"planQuery.term\" placeholder=\"查询学期\" />
-      <select v-model=\"planQuery.majorId\">
+    <div class="form-row">
+      <input v-model="planQuery.term" placeholder="查询学期" />
+      <select v-model="planQuery.majorId">
         <option value="">选择专业</option>
-        <option v-for=\"m in majors\" :key=\"m.id\" :value=\"m.id\">{{ m.name }}</option>
+        <option v-for="m in majors" :key="m.id" :value="m.id">{{ m.name }}</option>
       </select>
-      <button @click=\"loadPlans\">查询计划</button>
+      <button @click="loadPlans">查询计划</button>
     </div>
-    <crud-table :headers=\"planHeaders\" :rows=\"plans\" />
+    <crud-table :headers="planHeaders" :rows="plans" />
   </div>
 
-  <div class=\"card\">
+  <div class="card">
     <h2>教学任务分配</h2>
-    <div class=\"form-row\">
-      <select v-model=\"assignment.termPlanId\">
+    <div class="form-row">
+      <select v-model="assignment.termPlanId">
         <option value="">选择培养计划ID</option>
-        <option v-for=\"p in plans\" :key=\"p.id\" :value=\"p.id\">{{ p.id }} - {{ p.term }}</option>
+        <option v-for="p in plans" :key="p.id" :value="p.id">{{ p.id }} - {{ p.term }}</option>
       </select>
-      <input v-model.number=\"assignment.teacherId\" type=\"number\" placeholder=\"教师ID\" />
-      <input v-model=\"assignment.courseType\" placeholder=\"课程类别 (基础/专业)\" />
-      <input v-model=\"assignment.remarks\" placeholder=\"备注\" />
-      <button @click=\"saveAssignment\">保存分配</button>
+      <input v-model.number="assignment.teacherId" type="number" placeholder="教师ID" />
+      <input v-model="assignment.courseType" placeholder="课程类别 (基础/专业)" />
+      <input v-model="assignment.remarks" placeholder="备注" />
+      <button @click="saveAssignment">保存分配</button>
     </div>
-    <div class=\"form-row\">
-      <input v-model=\"assignmentTerm\" placeholder=\"查询学期\" />
-      <button @click=\"loadAssignments\">查询</button>
+    <div class="form-row">
+      <input v-model="assignmentTerm" placeholder="查询学期" />
+      <button @click="loadAssignments">查询</button>
     </div>
-    <crud-table :headers=\"assignmentHeaders\" :rows=\"assignments\" />
+    <crud-table :headers="assignmentHeaders" :rows="assignments" />
   </div>
 
-  <div class=\"card\">
+  <div class="card">
     <h2>上传课表</h2>
-    <div class=\"form-row\">
-      <select v-model=\"upload.ownerType\">
-        <option value=\"MAJOR\">专业课表</option>
-        <option value=\"TEACHER\">教师课表</option>
-        <option value=\"STUDENT\">学生课表</option>
+    <div class="form-row">
+      <select v-model="upload.ownerType">
+        <option value="MAJOR">专业课表</option>
+        <option value="TEACHER">教师课表</option>
+        <option value="STUDENT">学生课表</option>
       </select>
-      <input v-model.number=\"upload.ownerId\" placeholder=\"关联ID\" type=\"number\" />
-      <input v-model=\"upload.term\" placeholder=\"学期 2024-2025-1\" />
-      <input type=\"file\" @change=\"onFileChange\" />
-      <button :disabled=\"!upload.file\" @click=\"doUpload\">上传</button>
+      <input v-model.number="upload.ownerId" placeholder="关联ID" type="number" />
+      <input v-model="upload.term" placeholder="学期 2024-2025-1" />
+      <input type="file" @change="onFileChange" />
+      <button :disabled="!upload.file" @click="doUpload">上传</button>
     </div>
-    <div v-if=\"timetables.length\">
+    <div v-if="timetables.length">
       <h3>已上传</h3>
       <ul>
-        <li v-for=\"t in timetables\" :key=\"t.id\">{{ t.term }} - {{ t.fileName }} ({{ t.fileUrl }})</li>
+        <li v-for="t in timetables" :key="t.id">{{ t.term }} - {{ t.fileName }} ({{ t.fileUrl }})</li>
       </ul>
     </div>
   </div>
