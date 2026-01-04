@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.TermPlanMapper">
+    <resultMap id="planMap" type="com.example.academicsystem.entity.TermPlan">
+        <id property="id" column="id"/>
+        <result property="term" column="term"/>
+        <result property="majorId" column="major_id"/>
+        <result property="courseId" column="course_id"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.TermPlan" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO term_plan(term, major_id, course_id) VALUES (#{term}, #{majorId}, #{courseId})
+    </insert>
+
+    <select id="listByTermAndMajor" resultMap="planMap">
+        SELECT * FROM term_plan WHERE term=#{term} AND major_id=#{majorId}
+    </select>
+</mapper>
