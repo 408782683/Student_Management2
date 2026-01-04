@@ -36,3 +36,8 @@ src/main/resources
 3. 运行 `mvn spring-boot:run`（或在 IDE 中直接启动 `AcademicSystemApplication`）。
 
 > 说明：示例中密码校验与业务逻辑采用简化实现，适合课程作业和原型演示，可按实际需求扩展完善。
+
+## 前端（fronted）
+- 目录：`/fronted`，使用 Vue 3 + Vite + axios + vue-router。
+- 运行：`cd fronted && npm install && npm run dev`，默认代理 `/api` 到 `http://localhost:8080`，可直接对接后端。
+- 页面：登录、管理员（课程维护/课表上传）、教师（教学任务查询/成绩录入/课表查看）、学生（成绩与课表查询）。

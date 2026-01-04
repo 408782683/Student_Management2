@@ -5,3 +5,5 @@
 .classpath
 .mvn
 uploads
+/fronted/node_modules
+/fronted/dist
