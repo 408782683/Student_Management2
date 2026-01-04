@@ -3,8 +3,6 @@
     <el-card class="card-block" shadow="hover">
       <template #header><strong>修改密码</strong></template>
       <el-form :model="pwd" label-width="90px" :inline="true">
-        <el-form-item label="用户名"><el-input v-model="pwd.username" /></el-form-item>
-        <el-form-item label="旧密码"><el-input v-model="pwd.oldPassword" type="password" show-password /></el-form-item>
         <el-form-item label="新密码"><el-input v-model="pwd.newPassword" type="password" show-password /></el-form-item>
         <el-form-item><el-button type="primary" @click="changePwd">修改</el-button></el-form-item>
       </el-form>
@@ -71,8 +69,10 @@
 import { reactive, ref } from 'vue';
 import http from '../../api/http';
 import { ElMessage } from 'element-plus';
+import { getUser } from '../../utils/auth';
 
-const pwd = reactive({ username: '', oldPassword: '', newPassword: '' });
+const user = getUser();
+const pwd = reactive({ newPassword: '' });
 const query = reactive({ teacherId: '', term: '' });
 const assignments = ref([]);
 const grade = reactive({ studentId: '', courseId: '', term: '', score: '' });
@@ -81,7 +81,7 @@ const timetable = ref(null);
 const roster = reactive({ classId: '', term: '' });
 
 const changePwd = async () => {
-  await http.post('/teacher/password', pwd);
+  await http.post('/teacher/password', { username: user?.username, oldPassword: '', newPassword: pwd.newPassword });
   ElMessage.success('密码已修改');
 };
 
