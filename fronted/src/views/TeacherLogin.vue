@@ -36,6 +36,7 @@ import { reactive, ref } from 'vue';
 import http from '../api/http';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
+import { setUser } from '../utils/auth';
 
 const router = useRouter();
 const form = reactive({ username: '', password: '', captcha: '', role: 'TEACHER' });
@@ -54,7 +55,13 @@ const fetchCaptcha = async () => {
 const submit = async () => {
   loading.value = true;
   try {
-    await http.post('/auth/login', form);
+    const { data } = await http.post('/auth/login', form);
+    const user = data.data;
+    if (!user || user.role !== 'TEACHER') {
+      ElMessage.error('角色不匹配，禁止登录');
+      return;
+    }
+    setUser(user);
     ElMessage.success('登录成功');
     router.push('/teacher');
   } finally {
