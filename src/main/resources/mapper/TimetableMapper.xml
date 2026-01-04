@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.TimetableMapper">
+    <resultMap id="timetableMap" type="com.example.academicsystem.entity.Timetable">
+        <id property="id" column="id"/>
+        <result property="ownerType" column="owner_type"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="term" column="term"/>
+        <result property="fileName" column="file_name"/>
+        <result property="fileUrl" column="file_url"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.Timetable" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO timetable(owner_type, owner_id, term, file_name, file_url)
+        VALUES(#{ownerType}, #{ownerId}, #{term}, #{fileName}, #{fileUrl})
+    </insert>
+
+    <select id="findOne" resultMap="timetableMap">
+        SELECT * FROM timetable WHERE owner_type=#{ownerType} AND owner_id=#{ownerId} AND term=#{term} LIMIT 1
+    </select>
+
+    <select id="findAll" resultMap="timetableMap">
+        SELECT * FROM timetable
+        WHERE owner_type=#{ownerType}
+        <if test="ownerId != null"> AND owner_id=#{ownerId}</if>
+        <if test="term != null and term != ''"> AND term=#{term}</if>
+    </select>
+</mapper>
