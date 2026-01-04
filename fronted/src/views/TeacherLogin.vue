@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h2>学生登录</h2>
+    <h2>教师登录</h2>
     <div class="form-row">
       <label>用户名 <input v-model="form.username" /></label>
       <label>密码 <input type="password" v-model="form.password" /></label>
@@ -11,10 +11,7 @@
       <span v-if="captchaText">当前验证码：<strong>{{ captchaText }}</strong></span>
     </div>
     <button :disabled="loading" @click="submit">登录</button>
-    <div class="form-row" style="justify-content: space-between; margin-top:8px;">
-      <RouterLink to="/login/admin">我是管理员</RouterLink>
-      <RouterLink to="/login/teacher">我是老师</RouterLink>
-    </div>
+    <p style="margin-top:12px;">我是学生？<RouterLink to="/">去学生登录</RouterLink> | 我是管理员？<RouterLink to="/login/admin">去管理员登录</RouterLink></p>
   </div>
 </template>
 
@@ -24,7 +21,7 @@ import http from '../api/http';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const form = reactive({ username: '', password: '', captcha: '', role: 'STUDENT' });
+const form = reactive({ username: '', password: '', captcha: '', role: 'TEACHER' });
 const captchaText = ref('');
 const loading = ref(false);
 
@@ -42,9 +39,7 @@ const submit = async () => {
   try {
     await http.post('/auth/login', form);
     alert('登录成功');
-    router.push('/student');
-  } catch (e) {
-    // handled globally
+    router.push('/teacher');
   } finally {
     loading.value = false;
   }
