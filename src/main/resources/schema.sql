@@ -117,3 +117,37 @@ CREATE TABLE IF NOT EXISTS timetable (
     file_name VARCHAR(255),
     file_url VARCHAR(255)
 );
+
+-- 初始测试数据
+INSERT INTO college(name, code, description) VALUES ('计算机学院', 'CSE', '计算机科学与技术学院')
+    ON DUPLICATE KEY UPDATE name=VALUES(name);
+
+INSERT INTO major(name, code, college_id, description)
+SELECT '软件工程', 'SE', c.id, '软件工程专业'
+FROM college c WHERE c.code='CSE'
+ON DUPLICATE KEY UPDATE name=VALUES(name);
+
+INSERT INTO clazz(name, major_id, grade, counselor)
+SELECT '软件2201', m.id, 2022, '张老师'
+FROM major m WHERE m.code='SE'
+ON DUPLICATE KEY UPDATE name=VALUES(name);
+
+INSERT INTO course(code, name, credit, assessment_method, category, nature)
+VALUES ('C001', '高等数学', 4, '考试', '公共基础课', '必修')
+ON DUPLICATE KEY UPDATE name=VALUES(name);
+
+INSERT INTO teacher(teacher_no, name, title, hired_date, college_id, phone, email)
+SELECT 'T001', '王老师', '讲师', '2022-09-01', c.id, '13800000000', 'teacher@example.com'
+FROM college c WHERE c.code='CSE'
+ON DUPLICATE KEY UPDATE name=VALUES(name);
+
+INSERT INTO student(student_no, name, gender, birthday, class_id, phone, email, enrollment_date)
+SELECT 'S001', '李学生', '男', '2003-09-01', cl.id, '13900000000', 'student@example.com', '2022-09-01'
+FROM clazz cl WHERE cl.name='软件2201'
+ON DUPLICATE KEY UPDATE name=VALUES(name);
+
+INSERT INTO sys_user(username, password, role, name, phone)
+VALUES ('admin', 'admin123', 'ADMIN', '管理员', '13000000000'),
+       ('teacher1', '123456', 'TEACHER', '王老师', '13800000000'),
+       ('student1', '123456', 'STUDENT', '李学生', '13900000000')
+ON DUPLICATE KEY UPDATE password=VALUES(password);
