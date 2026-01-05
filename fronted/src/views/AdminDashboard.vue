@@ -6,7 +6,7 @@
       <el-col v-for="card in cards" :key="card.route" :xs="24" :sm="12" :md="8" :lg="6">
         <el-card shadow="hover" class="module-card" @click="go(card.route)" :body-style="{minHeight:'140px',cursor:'pointer'}">
           <div style="display:flex;align-items:flex-start;gap:10px;">
-            <el-icon :size=\"26\"><component :is=\"card.icon\" /></el-icon>
+            <el-icon :size="26"><component :is="card.icon" /></el-icon>
             <div>
               <div style="font-weight:700;font-size:16px;">{{ card.title }}</div>
               <div style="color:#6b7280;margin:6px 0 10px;">{{ card.desc }}</div>
