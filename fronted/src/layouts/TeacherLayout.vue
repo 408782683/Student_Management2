@@ -10,8 +10,8 @@
         <div style="display:flex;align-items:center;gap:12px;">
           <el-icon><i-ep-notebook /></el-icon>
           <div>
-            <div style="font-size:16px;font-weight:700;">教师中心</div>
-            <div style="font-size:12px;opacity:0.9;">Teaching Portal</div>
+            <div style="font-size:16px;font-weight:700;">淮安大学教务系统 · 教师中心</div>
+            <div style="font-size:12px;opacity:0.9;">Huai'an University Teaching Portal</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">

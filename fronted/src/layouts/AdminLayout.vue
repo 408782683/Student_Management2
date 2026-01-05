@@ -12,8 +12,8 @@
         <div style="display:flex;align-items:center;gap:12px;">
           <el-icon><i-ep-suitcase /></el-icon>
           <div>
-            <div style="font-size:16px;font-weight:700;">管理员中心</div>
-            <div style="font-size:12px;opacity:0.9;">Academic Admin Portal</div>
+            <div style="font-size:16px;font-weight:700;">淮安大学教务系统 · 管理员中心</div>
+            <div style="font-size:12px;opacity:0.9;">Huai'an University Academic Admin Portal</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">

@@ -1,6 +1,13 @@
 <template>
   <div class="auth-page">
     <el-card class="auth-card" shadow="hover" role="form" aria-label="管理员登录表单">
+      <div class="auth-brand" aria-label="淮安大学教务系统标识">
+        <img :src="logo" alt="淮安大学教务系统 logo" />
+        <div class="brand-text">
+          <span class="brand-title">淮安大学教务系统</span>
+          <span class="brand-sub">Huai'an University Academic Portal</span>
+        </div>
+      </div>
       <div class="auth-header">
         <div>
           <h1 class="auth-title">管理员登录</h1>
@@ -73,6 +80,7 @@ import http from '../api/http';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { User, Lock, Refresh } from '@element-plus/icons-vue';
+import logo from '../logo.svg';
 import { setUser, setPasswordCache } from '../utils/auth';
 
 const router = useRouter();
