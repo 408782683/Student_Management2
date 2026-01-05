@@ -80,7 +80,7 @@ import http from '../api/http';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { User, Lock, Refresh } from '@element-plus/icons-vue';
-import logo from '../logo.svg';
+import logo from '../logo.png';
 import { setUser, setPasswordCache } from '../utils/auth';
 
 const router = useRouter();
