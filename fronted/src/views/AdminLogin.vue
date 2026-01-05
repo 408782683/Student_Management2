@@ -1,34 +1,70 @@
 <template>
-  <el-row justify="center" style="margin-top: 60px;">
-    <el-col :xs="24" :sm="14" :md="10" :lg="8">
-      <el-card shadow="hover">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <h2 style="margin:0;">管理员登录</h2>
-          <el-tag type="danger">Admin</el-tag>
+  <div class="auth-page">
+    <el-card class="auth-card" shadow="hover" role="form" aria-label="管理员登录表单">
+      <div class="auth-header">
+        <div>
+          <h1 class="auth-title">管理员登录</h1>
+          <p class="auth-subtitle">进入教务管理后台，完成资源与权限管理</p>
         </div>
-        <el-form :model="form" label-width="80px" style="margin-top:16px;">
-          <el-form-item label="用户名">
-            <el-input v-model="form.username" autocomplete="username" />
-          </el-form-item>
-          <el-form-item label="密码">
-            <el-input v-model="form.password" type="password" show-password autocomplete="current-password" />
-          </el-form-item>
-          <el-form-item label="验证码">
-            <el-input v-model="form.captcha" style="width:180px;" />
-            <el-button style="margin-left:8px;" @click="fetchCaptcha">获取验证码</el-button>
-            <el-tag v-if="captchaText" type="info" style="margin-left:8px;">{{ captchaText }}</el-tag>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submit" block>登录</el-button>
-          </el-form-item>
-        </el-form>
-        <div style="display:flex;justify-content:space-between;">
-          <RouterLink to="/">我是学生</RouterLink>
-          <RouterLink to="/login/teacher">我是老师</RouterLink>
-        </div>
-      </el-card>
-    </el-col>
-  </el-row>
+        <el-tag type="danger" effect="light">Admin</el-tag>
+      </div>
+      <el-form
+        class="auth-form"
+        :model="form"
+        label-position="top"
+        @keyup.enter="submit"
+      >
+        <div v-if="errorMsg" class="auth-error" role="alert">{{ errorMsg }}</div>
+        <el-form-item label="用户名" label-for="admin-username">
+          <el-input
+            id="admin-username"
+            v-model="form.username"
+            autocomplete="username"
+            :prefix-icon="User"
+            aria-required="true"
+          />
+        </el-form-item>
+        <el-form-item label="密码" label-for="admin-password">
+          <el-input
+            id="admin-password"
+            v-model="form.password"
+            type="password"
+            show-password
+            autocomplete="current-password"
+            :prefix-icon="Lock"
+            aria-required="true"
+          />
+        </el-form-item>
+        <el-form-item label="验证码" label-for="admin-captcha">
+          <div class="auth-captcha">
+            <el-input
+              id="admin-captcha"
+              v-model="form.captcha"
+              autocomplete="one-time-code"
+              aria-required="true"
+            />
+            <el-button :icon="Refresh" @click="fetchCaptcha">获取验证码</el-button>
+            <el-tag v-if="captchaText" type="info">{{ captchaText }}</el-tag>
+          </div>
+        </el-form-item>
+        <el-form-item class="auth-actions">
+          <el-button
+            type="primary"
+            :loading="loading"
+            @click="submit"
+            style="width:100%;"
+            aria-live="polite"
+          >
+            登录
+          </el-button>
+        </el-form-item>
+      </el-form>
+      <div class="auth-links" aria-label="其他角色登录入口">
+        <RouterLink to="/">我是学生</RouterLink>
+        <RouterLink to="/login/teacher">我是老师</RouterLink>
+      </div>
+    </el-card>
+  </div>
 </template>
 
 <script setup>
@@ -36,12 +72,14 @@ import { reactive, ref } from 'vue';
 import http from '../api/http';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
+import { User, Lock, Refresh } from '@element-plus/icons-vue';
 import { setUser, setPasswordCache } from '../utils/auth';
 
 const router = useRouter();
 const form = reactive({ username: '', password: '', captcha: '', role: 'ADMIN' });
 const captchaText = ref('');
 const loading = ref(false);
+const errorMsg = ref('');
 
 const fetchCaptcha = async () => {
   if (!form.username) {
@@ -50,21 +88,25 @@ const fetchCaptcha = async () => {
   }
   const { data } = await http.get('/auth/captcha', { params: { key: form.username } });
   captchaText.value = data.data;
+  errorMsg.value = '';
 };
 
 const submit = async () => {
   loading.value = true;
+  errorMsg.value = '';
   try {
     const { data } = await http.post('/auth/login', form);
     const user = data.data;
     if (!user || user.role !== 'ADMIN') {
-      ElMessage.error('角色不匹配，禁止登录');
+      errorMsg.value = '角色不匹配，禁止登录';
       return;
     }
     setUser(user);
     setPasswordCache(user.username, form.password);
     ElMessage.success('登录成功');
     router.push('/admin/base');
+  } catch (e) {
+    errorMsg.value = '登录失败，请检查账号、密码或验证码';
   } finally {
     loading.value = false;
   }
