@@ -2,7 +2,11 @@
   <el-container style="height:100vh;">
     <el-aside width="220px">
       <el-menu :default-active="active" router>
-        <el-menu-item index="/teacher/grades">成绩与课表</el-menu-item>
+        <el-menu-item index="/teacher/dashboard">工作台</el-menu-item>
+        <el-menu-item index="/teacher/assignments">教学任务</el-menu-item>
+        <el-menu-item index="/teacher/grades">成绩录入</el-menu-item>
+        <el-menu-item index="/teacher/timetable">课表与点名册</el-menu-item>
+        <el-menu-item index="/teacher/account">账号安全</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>

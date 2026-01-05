@@ -2,9 +2,13 @@
   <el-container style="height:100vh;">
     <el-aside width="220px">
       <el-menu :default-active="active" router>
-        <el-menu-item index="/admin/base">基础数据</el-menu-item>
-        <el-menu-item index="/admin/teachers">教师管理</el-menu-item>
+        <el-menu-item index="/admin/base">工作台</el-menu-item>
         <el-menu-item index="/admin/students">学生管理</el-menu-item>
+        <el-menu-item index="/admin/teachers">教师管理</el-menu-item>
+        <el-menu-item index="/admin/org">学院/专业/班级</el-menu-item>
+        <el-menu-item index="/admin/course-plan">课程与培养计划</el-menu-item>
+        <el-menu-item index="/admin/assignments">教学任务分配</el-menu-item>
+        <el-menu-item index="/admin/timetable">课表管理</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>

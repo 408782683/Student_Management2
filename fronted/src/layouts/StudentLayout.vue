@@ -2,7 +2,11 @@
   <el-container style="height:100vh;">
     <el-aside width="220px">
       <el-menu :default-active="active" router>
-        <el-menu-item index="/student/courses">选课与课表</el-menu-item>
+        <el-menu-item index="/student/dashboard">工作台</el-menu-item>
+        <el-menu-item index="/student/courses">选课</el-menu-item>
+        <el-menu-item index="/student/grades">成绩查询</el-menu-item>
+        <el-menu-item index="/student/timetable">课表</el-menu-item>
+        <el-menu-item index="/student/account">账号安全</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
