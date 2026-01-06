@@ -2,7 +2,6 @@
   <el-card class="card-block" shadow="hover">
     <template #header><strong>自主选课</strong></template>
     <el-form :inline="true" label-width="90px">
-      <el-form-item label="学生ID"><el-input v-model.number="studentId" type="number" /></el-form-item>
       <el-form-item label="学期"><el-input v-model="selectTerm" /></el-form-item>
       <el-form-item label="课程">
         <el-select v-model.number="selectedCourseId" placeholder="选择课程" style="width:200px;">

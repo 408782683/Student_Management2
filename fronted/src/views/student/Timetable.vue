@@ -2,7 +2,6 @@
   <el-card class="card-block" shadow="hover">
     <template #header><strong>课表下载</strong></template>
     <el-form :inline="true" label-width="90px">
-      <el-form-item label="学生ID"><el-input v-model.number="studentId" type="number" /></el-form-item>
       <el-form-item label="学期"><el-input v-model="term" /></el-form-item>
       <el-form-item><el-button type="primary" @click="loadTimetable">获取课表</el-button></el-form-item>
     </el-form>

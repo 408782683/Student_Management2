@@ -2,7 +2,6 @@
   <el-card class="card-block" shadow="hover">
     <template #header><strong>成绩查询 / 打印</strong></template>
     <el-form :inline="true" label-width="90px">
-      <el-form-item label="学生ID"><el-input v-model.number="studentId" type="number" /></el-form-item>
       <el-form-item><el-button type="primary" @click="loadGrades">查询</el-button></el-form-item>
       <el-form-item><el-button :disabled="!grades.length" @click="printGrades">打印成绩单</el-button></el-form-item>
     </el-form>
