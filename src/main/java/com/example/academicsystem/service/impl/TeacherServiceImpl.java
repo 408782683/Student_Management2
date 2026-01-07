@@ -67,6 +67,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public List<GradeRecord> listGradesByCourse(Long courseId, String term) {
+        return gradeMapper.listByCourse(courseId, term);
+    }
+
+    @Override
     public Timetable getTimetable(Long teacherId, String term) {
         return timetableMapper.findOne("TEACHER", teacherId, term);
     }

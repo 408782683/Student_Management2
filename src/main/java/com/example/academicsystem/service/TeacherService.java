@@ -16,6 +16,8 @@ public interface TeacherService {
 
     List<GradeRecord> listGradesByTeacher(Long teacherId, String term);
 
+    List<GradeRecord> listGradesByCourse(Long courseId, String term);
+
     Timetable getTimetable(Long teacherId, String term);
 
     byte[] exportRoster(Long classId, String term);

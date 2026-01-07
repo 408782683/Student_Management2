@@ -44,8 +44,8 @@ public class TeacherController {
     }
 
     @GetMapping("/grades")
-    public ApiResponse<List<GradeRecord>> listGrades(@RequestParam Long teacherId, @RequestParam String term) {
-        return ApiResponse.success(teacherService.listGradesByTeacher(teacherId, term));
+    public ApiResponse<List<GradeRecord>> listGrades(@RequestParam Long courseId, @RequestParam String term) {
+        return ApiResponse.success(teacherService.listGradesByCourse(courseId, term));
     }
 
     @GetMapping("/timetable")

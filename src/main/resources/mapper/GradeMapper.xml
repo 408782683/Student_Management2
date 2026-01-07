@@ -26,4 +26,12 @@
             AND gr.term=#{term}
         </if>
     </select>
+
+    <select id="listByCourse" resultMap="gradeMap">
+        SELECT * FROM grade_record
+        WHERE course_id=#{courseId}
+        <if test="term != null and term != ''">
+            AND term=#{term}
+        </if>
+    </select>
 </mapper>

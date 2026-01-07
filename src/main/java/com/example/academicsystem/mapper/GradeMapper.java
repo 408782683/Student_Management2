@@ -13,4 +13,6 @@ public interface GradeMapper {
     List<GradeRecord> listByStudent(@Param("studentId") Long studentId);
 
     List<GradeRecord> listByTeacher(@Param("teacherId") Long teacherId, @Param("term") String term);
+
+    List<GradeRecord> listByCourse(@Param("courseId") Long courseId, @Param("term") String term);
 }

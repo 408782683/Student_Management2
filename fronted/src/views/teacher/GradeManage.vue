@@ -42,10 +42,20 @@ const courseMap = ref({});
 const submitGrade = async () => {
   await http.post('/teacher/grade', grade);
   ElMessage.success('成绩已提交');
+  if (!query.courseId) {
+    query.courseId = grade.courseId;
+  }
+  if (!query.term) {
+    query.term = grade.term;
+  }
   await loadGrades();
 };
 
 const loadGrades = async () => {
+  if (!query.courseId || !query.term) {
+    ElMessage.warning('请填写课程ID与学期进行查询');
+    return;
+  }
   const { data } = await http.get('/teacher/grades', { params: query });
   grades.value = data.data;
 };
