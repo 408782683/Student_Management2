@@ -1,0 +1,28 @@
+@startuml
+title 管理员流程图
+start
+:登录系统;
+if (验证码与账号验证通过?) then (是)
+  :进入管理员工作台;
+  :选择业务模块;
+  if (维护组织结构?) then (是)
+    :学院/专业/班级管理;
+  endif
+  if (维护师生信息?) then (是)
+    :学生/教师信息管理;
+  endif
+  if (课程与计划?) then (是)
+    :课程与培养计划维护;
+  endif
+  if (教学任务?) then (是)
+    :分配教学任务;
+  endif
+  if (课表管理?) then (是)
+    :上传/维护课表;
+  endif
+  :退出登录;
+else (否)
+  :提示错误;
+endif
+stop
+@enduml
