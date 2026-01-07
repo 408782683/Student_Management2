@@ -106,5 +106,3 @@ npm run dev
 
 ## API 文档
 - `http://localhost:8080/swagger-ui.html`
-
-> 说明：本项目为课程作业示例，业务逻辑已做简化，适合原型展示与扩展开发。
