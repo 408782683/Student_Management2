@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: academic-system
+  datasource:
+    url: jdbc:mysql://localhost:3306/academic_system?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: 408782683
+    password: LAOzimjwwx233
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  freemarker:
+    suffix: .ftl
+    charset: UTF-8
+    cache: false
+    template-loader-path: classpath:/templates
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.example.academicsystem.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.academicsystem: INFO

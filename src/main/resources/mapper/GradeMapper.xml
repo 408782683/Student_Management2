@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.GradeMapper">
+    <resultMap id="gradeMap" type="com.example.academicsystem.entity.GradeRecord">
+        <id property="id" column="id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="courseId" column="course_id"/>
+        <result property="term" column="term"/>
+        <result property="score" column="score"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.GradeRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO grade_record(student_id, course_id, term, score) VALUES(#{studentId}, #{courseId}, #{term}, #{score})
+    </insert>
+
+    <select id="listByStudent" resultMap="gradeMap">
+        SELECT * FROM grade_record WHERE student_id=#{studentId}
+    </select>
+
+    <select id="listByTeacher" resultMap="gradeMap">
+        SELECT gr.* FROM grade_record gr
+        JOIN term_plan tp ON gr.course_id = tp.course_id
+        JOIN teaching_assignment ta ON ta.term_plan_id = tp.id
+        WHERE ta.teacher_id=#{teacherId}
+        <if test="term != null and term != ''">
+            AND gr.term=#{term}
+        </if>
+    </select>
+
+    <select id="listByCourse" resultMap="gradeMap">
+        SELECT * FROM grade_record
+        WHERE course_id=#{courseId}
+        <if test="term != null and term != ''">
+            AND term=#{term}
+        </if>
+    </select>
+</mapper>

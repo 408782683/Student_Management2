@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.academicsystem.mapper.StudentCourseMapper">
+    <resultMap id="studentCourseMap" type="com.example.academicsystem.entity.StudentCourse">
+        <id property="id" column="id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="courseId" column="course_id"/>
+        <result property="term" column="term"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.academicsystem.entity.StudentCourse" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student_course(student_id, course_id, term)
+        VALUES(#{studentId}, #{courseId}, #{term})
+    </insert>
+
+    <select id="find" resultMap="studentCourseMap">
+        SELECT * FROM student_course WHERE student_id=#{studentId} AND course_id=#{courseId} AND term=#{term} LIMIT 1
+    </select>
+
+    <select id="listByStudent" resultMap="studentCourseMap">
+        SELECT * FROM student_course WHERE student_id=#{studentId}
+    </select>
+</mapper>
