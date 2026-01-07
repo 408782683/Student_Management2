@@ -7,6 +7,9 @@
     </el-form>
     <el-table :data="grades" height="380">
       <el-table-column prop="courseId" label="课程ID" />
+      <el-table-column label="课程名称">
+        <template #default="scope">{{ courseName(scope.row.courseId) }}</template>
+      </el-table-column>
       <el-table-column prop="term" label="学期" />
       <el-table-column prop="score" label="成绩" />
     </el-table>
@@ -14,13 +17,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import http from '../../api/http';
 import { getUser } from '../../utils/auth';
 
 const user = getUser();
 const studentId = ref(user?.studentId || '');
 const grades = ref([]);
+const courses = ref([]);
+const courseMap = ref({});
 
 const loadGrades = async () => {
   const { data } = await http.get('/student/grades', { params: { studentId: studentId.value } });
@@ -28,4 +33,17 @@ const loadGrades = async () => {
 };
 
 const printGrades = () => window.print();
+
+const loadCourses = async () => {
+  const { data } = await http.get('/admin/courses');
+  courses.value = data.data;
+  courseMap.value = Object.fromEntries(courses.value.map(c => [c.id, c.name]));
+};
+
+const courseName = (id) => courseMap.value[id] || '-';
+
+onMounted(async () => {
+  await loadCourses();
+  await loadGrades();
+});
 </script>
