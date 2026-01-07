@@ -1,6 +1,7 @@
 # 淮安大学教务系统
 
 高校实习教务管理系统课程作业示例，采用 **Spring Boot 2.7 + MyBatis + MySQL + Lombok + Swagger/OpenAPI + Freemarker** 的后端，前端为 **Vue 3 + Vite + Element Plus**，前后端分离。
+本系统项目成员：朱雨晨，胡展硕，陆鹏
 
 ## 项目目标与范围
 系统用于实现对高校学生、教师与教务的管理，核心能力包括：
